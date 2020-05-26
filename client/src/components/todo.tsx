@@ -25,7 +25,7 @@ const Todo: React.SFC<Props> = ({
   } = todo;
 
   const [isCompleted, setStatus] = useState(status === 'completed');
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(subtasks && subtasks?.filter(sb => sb.status === 'pending').length > 0);
 
   useEffect(() => {
     return setStatus(() => (todo.status === 'completed' || false));

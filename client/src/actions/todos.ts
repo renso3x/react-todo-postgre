@@ -129,6 +129,7 @@ export const updateTodo = (todo: Todo) => {
 export const createSubTask = (task: SubTask) => {
   return async (dispatch: Dispatch) => {
     try {
+      delete task.status;
       const response = await axios.post(`${API}/todos/subtask`, task);
       dispatch(addSubTask(response.data));
     } catch (e) {
