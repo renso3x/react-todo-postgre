@@ -7,10 +7,7 @@
     "start": "node .bin/app.js",
     "dev": "nodemon .bin/app.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000 --coverage --coverageDirectory=output/coverage/jest",
-    "migrate": "npx sequelize db:migrate",
-    "migrate:reset": "npx sequelize db:migrate:undo:all && npm run migrate && npm run seed:data",
-    "seed:data": "npx sequelize db:seed:undo:all && npx sequelize db:seed:all",
-    "pretest": "cross-env NODE_ENV=test npm run migrate:reset"
+    "pretest": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:undo:all && sequelize db:seed:all"
   },
   "author": "Romeo Enso",
   "license": "ISC",

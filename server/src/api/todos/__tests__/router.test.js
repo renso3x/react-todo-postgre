@@ -2,19 +2,19 @@ const request = require('supertest')
 const app = require('../../../index');
 
 describe('Todo API', () => {
-  it('should fetch all todos', async () => {
-    const res = await request(app).get('/todos');
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveLength(3);
-    expect(res.body[0]).toHaveProperty('subtasks');
-  });
-
   it('should create a new todo', async () => {
     const res = await request(app)
       .post('/todos')
       .send({ title: 'test is cool' })
     expect(res.statusCode).toEqual(200)
     expect(res.body).toHaveProperty('title')
+  });
+
+  it('should fetch all todos', async () => {
+    const res = await request(app).get('/todos');
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveLength(4);
+    expect(res.body[0]).toHaveProperty('subtasks');
   });
 
   it('should update a todo', async () => {
