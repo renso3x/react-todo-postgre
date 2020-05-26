@@ -8,7 +8,6 @@ import {
 const updateSubTaskTodo = (task: Todo, subTask: SubTask) => {
   return {
     ...task,
-    status: subTask.status === 'pending' ? 'pending' : 'completed',
     subtasks: task.subtasks?.map(subtask => {
       if (subtask.id === subTask.id) {
         return { ...subtask, status: subTask.status };

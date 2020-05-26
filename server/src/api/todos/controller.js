@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const models = require('../../models');
 
 const { Todo, SubTask } = models;
@@ -29,14 +30,16 @@ exports.updateTodo = async(req, res) => {
     include: [SubTask]
   });
 
-  await Promise.all(
-    todo.subtasks.map(async (sub) => {
-      await sub.update({ status: 'completed' });
-      return sub;
-    })
-  )
-
   if (!todo) return res.status(404).send('Cannot find todo');
+
+  if (payload.status === 'completed') {
+    await Promise.all(
+      todo.subtasks.map(async (sub) => {
+        await sub.update({ status: 'completed' });
+        return sub;
+      })
+    )
+  }
 
   await todo.update(payload);
 
@@ -62,10 +65,6 @@ exports.updateSubTask = async(req, res) => {
     where: { id },
     include: [Todo]
   });
-
-  if (payload.status === 'pending') {
-    await subTask.todo.update({ status: 'pending' });
-  }
 
   if (!subTask) return res.status(404).send('Cannot find subtask');
 
